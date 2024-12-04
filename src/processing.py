@@ -1,9 +1,12 @@
-def filter_by_state(state: list) -> list:
+from typing import Iterable, Any
+
+
+def filter_by_state(dictionaries: Iterable[dict[Any, Any]], state: Any="EXECUTED") -> dict[Any, Any]:
     """Функция возвращает отсортированный список словарей"""
     dictionary = []
-    for i in state:
-        if i["state"] == "EXECUTED":
-            dictionary.append(i)
+    for dict_ in dictionaries:
+        if dict_["state"] == "EXECUTED":
+            dictionary.append(dict_)
     return dictionary
 
 
@@ -19,9 +22,9 @@ print(
 )
 
 
-def sort_by_date(list_dicts: list) -> list:
+def sort_by_date(list_dicts: Iterable[dict[Any, Any]], reverse: bool = True) -> dict[Any, Any]:
     """Функция возвращает новый список, отсортированный по дате"""
-    sorted_list = sorted(list_dicts, key=lambda x: x["date"], reverse=True)
+    sorted_list = sorted(list_dicts, key=lambda x: x["date"], reverse=reverse)
     return sorted_list
 
 
