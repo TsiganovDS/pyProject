@@ -1,11 +1,14 @@
 from typing import Iterable, Any
 
 
-def filter_by_state(dictionaries: Iterable[dict[Any, Any]], state: Any="EXECUTED") -> dict[Any, Any]:
+def filter_by_state(dictionaries: Iterable[dict[Any, Any]],  key: str = "EXECUTED") -> list:
     """Функция возвращает отсортированный список словарей"""
     dictionary = []
+    for i in dictionaries:
+        if not i.get("state"):
+            raise ValueError("Отсутствует ключ для фильтра")
     for dict_ in dictionaries:
-        if dict_["state"] == "EXECUTED":
+        if dict_["state"] == key:
             dictionary.append(dict_)
     return dictionary
 
@@ -22,9 +25,9 @@ print(
 )
 
 
-def sort_by_date(list_dicts: Iterable[dict[Any, Any]], reverse: bool = True) -> dict[Any, Any]:
+def sort_by_date(list_dicts: Iterable[dict[Any, Any]], keys: bool = True) -> list:
     """Функция возвращает новый список, отсортированный по дате"""
-    sorted_list = sorted(list_dicts, key=lambda x: x["date"], reverse=reverse)
+    sorted_list = sorted(list_dicts, key=lambda x: x["date"], reverse=keys)
     return sorted_list
 
 
