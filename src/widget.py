@@ -1,12 +1,32 @@
-def mask_account_card(card_number: str) -> str:
-    """Функция маскировки номера карты"""
-    return f"{card_number[0:4]} **{card_number[-4:]}"
+from datetime import datetime
+
+from src.masks import get_mask_card_number, get_mask_account
 
 
-def get_date(date_: str) -> str:
-    """Функция возврата даты"""
-    return f"{date_[8:10]}.{date_[5:7]}.{date_[0:4]}"
+def mask_account_card(cart: str) -> str:
+    """функция обрабатывает информацию как о картах, так и о счетах."""
+    name_cart = ""
+    numer_cart = ""
+    list_cart = cart.split()
+    for i in list_cart:
+        if i.isdigit():
+            numer_cart += i
+        elif i.isalpha():
+            name_cart += i + " "
+    if len(numer_cart) == 16:
+        return str(name_cart + get_mask_card_number(str(numer_cart)))
+    elif len(numer_cart) == 20:
+        return str(name_cart + get_mask_account(str(numer_cart)))
+    else:
+        raise ValueError("Введен неправильный номер")
 
 
-print(mask_account_card("Счет 73654108430135874305"))
-print(get_date("2024-03-11T02:26:18.671407"))
+def get_date(date_sting: str) -> str:
+    """
+    функция принимает на вход строку с датой в формате "2024-03-11T02:26:18.671407"  и возвращает
+    строку с датой в формате "ДД.ММ.ГГГГ" ("11.03.2024").
+    """
+    if len(date_sting) == 0:
+        raise ValueError("Отсутствует дата")
+    date_obj = datetime.fromisoformat(date_sting).date()
+    return date_obj.strftime("%d.%m.%Y")
