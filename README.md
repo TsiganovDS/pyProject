@@ -13,4 +13,4 @@
 ### Функция фильтрации в операциях по счетам.
 ## Инструкция по установке:
 ### 1.Скачать репозиторий: git clone https://github.com/TsiganovDS/pyProject
-### 2. 2.Установить не обходимые зависимости: pip install -r requirements
+### 2. 2.Установить необходимые зависимости: pip install -r requirements
