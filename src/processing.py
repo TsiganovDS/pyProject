@@ -1,7 +1,7 @@
-from typing import Iterable, Any
+from typing import Any, Iterable
 
 
-def filter_by_state(dictionaries: Iterable[dict[Any, Any]],  key: str = "EXECUTED") -> list:
+def filter_by_state(dictionaries: Iterable[dict[Any, Any]], key: str = "EXECUTED") -> list:
     """Функция возвращает отсортированный список словарей"""
     dictionary = []
     for i in dictionaries:

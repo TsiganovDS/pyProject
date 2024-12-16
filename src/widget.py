@@ -1,10 +1,10 @@
 from datetime import datetime
 
-from src.masks import get_mask_card_number, get_mask_account
+from src.masks import get_mask_account, get_mask_card_number
 
 
 def mask_account_card(cart: str) -> str:
-    """функция обрабатывает информацию как о картах, так и о счетах."""
+    """Функция обрабатывает информацию как о картах, так и о счетах."""
     name_cart = ""
     numer_cart = ""
     list_cart = cart.split()
@@ -23,7 +23,7 @@ def mask_account_card(cart: str) -> str:
 
 def get_date(date_sting: str) -> str:
     """
-    функция принимает на вход строку с датой в формате "2024-03-11T02:26:18.671407"  и возвращает
+    Функция принимает на вход строку с датой в формате "2024-03-11T02:26:18.671407"  и возвращает
     строку с датой в формате "ДД.ММ.ГГГГ" ("11.03.2024").
     """
     if len(date_sting) == 0:
