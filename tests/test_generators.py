@@ -41,6 +41,28 @@ def test_transaction_descriptions_3(index: Any, expected: Any) -> None:
     assert descriptions[index] == expected
 
 
+@pytest.fixture
+def number_generator() -> list:
+    return [
+        "0000 0000 0000 0001",
+        "0000 0000 0000 0002",
+        "0000 0000 0000 0003",
+        "0000 0000 0000 0004",
+        "0000 0000 0000 0005",
+    ]
+
+
+@pytest.fixture
+def transaction_des() -> list:
+    return [
+        "Перевод организации",
+        "Перевод со счета на счет",
+        "Перевод со счета на счет",
+        "Перевод с карты на карту",
+        "Перевод организации",
+    ]
+
+
 def test_card_number_generator() -> None:
     numer = card_number_generator(95, 96)
     assert next(numer) == "0000 0000 0000 0095"
