@@ -2,7 +2,7 @@ import json
 import os
 
 
-def loadtrfrom_json():
+def loadtrfrom_json() -> list:
     file_path = os.path.join(os.path.dirname(__file__), "..", "data", "operations.json")
     if not os.path.isfile(file_path):
         return []
