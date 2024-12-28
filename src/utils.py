@@ -3,7 +3,7 @@ import os
 
 
 def loadtrfrom_json():
-    file_path = "C:\\Users\\Dmitriy\\PycharmProjects\\pyProject\\data\\operations.json"  # os.path.join('data', 'operations.json')
+    file_path = os.path.join(os.path.dirname(__file__), "..", "data", "operations.json")
     if not os.path.isfile(file_path):
         return []
 
