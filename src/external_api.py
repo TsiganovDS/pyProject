@@ -4,7 +4,7 @@ import requests
 def tranzaction() -> float:
     url = "https://api.apilayer.com/exchangerates_data/convert"
     payload = {"amount": 1, "from": "EUR", "to": "RUB"}
-    headers = {"apikey": "O1j67DhxMMtuEIKXzSryYPNhlgD4aT64"}
+    headers = {"apikey": ""}
     response = requests.get(url, headers=headers, params=payload)
     if response.status_code == 200:
         data = response.json()
