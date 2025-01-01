@@ -8,7 +8,7 @@ load_dotenv()
 API_KEY = os.getenv("API_KEY")
 
 
-def currency_conversion(transaction: dict) -> Any:
+def currency_conversion(transaction: dict) -> float:
     """Функция конвертации"""
     from_convert = transaction["operationAmount"]["currency"]["code"]
     to_convert = "RUB"
