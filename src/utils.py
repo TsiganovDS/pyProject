@@ -16,13 +16,13 @@ def loadtrfrom_json(file_path: str) -> list:
     return content
 
 
-print(loadtrfrom_json(file_path = os.path.join(os.path.dirname(__file__), "..", "data", "oper.json")))
-file_path = os.path.join(os.path.join(os.path.dirname(__file__), "..", "data", "oper.json"))
+print(loadtrfrom_json(file_path = os.path.join(os.path.dirname(__file__), "..", "data", "operations.json")))
+file_path = os.path.join(os.path.join(os.path.dirname(__file__), "..", "data", "operations.json"))
 content = loadtrfrom_json(file_path)
 
 
 def sum_transaction(money):
-    from external_api import currency_conversion
+    from src.external_api import currency_conversion
 
     if money["operationAmount"]["currency"]["code"] == "RUB":
         result = money["operationAmount"]["amount"]
