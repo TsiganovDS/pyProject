@@ -2,26 +2,38 @@ import json
 import os
 
 
-def loadtrfrom_json() -> list:
-    file_path = os.path.join(os.path.dirname(__file__), "..", "data", "operations.json")
-    if not os.path.isfile(file_path):
-        return []
-
-    with open(file_path, "r", encoding="utf-8") as file:
-        content = file.read().strip()
-
-    if not content:
-        return []
-
+def loadtrfrom_json(file_path: str) -> list:
     try:
-        data = json.loads(content)
-
-        if isinstance(data, list):
-            return data
-        else:
+        with open(file_path, encoding="utf-8") as file:
+            try:
+                content = json.load(file)
+            except json.JSONDecodeError:
+                return []
+        if not isinstance(content, list):
             return []
-    except json.JSONDecodeError:
+    except FileNotFoundError:
         return []
+    return content
 
 
-data = print(loadtrfrom_json())
+print(loadtrfrom_json(file_path = os.path.join(os.path.dirname(__file__), "..", "data", "operations.json")))
+file_path = os.path.join(os.path.join(os.path.dirname(__file__), "..", "data", "operations.json"))
+content = loadtrfrom_json(file_path)
+
+
+def sum_transaction(money):
+    from src.external_api import currency_conversion
+
+    if money["operationAmount"]["currency"]["code"] == "RUB":
+        result = money["operationAmount"]["amount"]
+        return float(result)
+    else:
+        return currency_conversion(money)
+
+
+for transaction in content:
+    rub_amount = sum_transaction(transaction)
+    if rub_amount is not None:
+        print(f"Транзакция ID {transaction.get('id', 'неизвестный ID')}: Сумма в RUB = {rub_amount}")
+    else:
+        print(f"Транзакция ID {transaction.get('id', 'неизвестный ID')} не в RUB или данные некорректны.")
