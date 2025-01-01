@@ -1,17 +1,19 @@
+import os
+
 import requests
 
+from dotenv import load_dotenv
 
-def tranzaction() -> float:
-    url = "https://api.apilayer.com/exchangerates_data/convert"
-    payload = {"amount": 1, "from": "EUR", "to": "RUB"}
-    headers = {"apikey": "O1j67DhxMMtuEIKXzSryYPNhlgD4aT64"}
-    response = requests.get(url, headers=headers, params=payload)
-    if response.status_code == 200:
-        data = response.json()
-        return data["result"]
-    else:
-        print(f"Ошибка: {response.status_code}")
-        return 0.0
+load_dotenv('../.env')
+API_KEY = os.getenv('API_KEY')
 
 
-print(tranzaction())
+def currency_conversion(content):
+    from_convert = content["operationAmount"]["currency"]["code"]
+    to_convert = "RUB"
+    amount = float(content["operationAmount"]["amount"])
+    url = f"https://api.apilayer.com/exchangerates_data/convert?to={to_convert}&from={from_convert}&amount={amount}"
+    headers = {"apikey": API_KEY}
+    r = requests.get(url, headers=headers)
+    result = r.json()
+    return result
