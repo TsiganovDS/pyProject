@@ -17,4 +17,4 @@ def currency_conversion(transaction: dict) -> float:
     headers = {"apikey": API_KEY}
     r = requests.get(url, headers=headers)
     result = r.json()
-    return result
+    return result['result']
