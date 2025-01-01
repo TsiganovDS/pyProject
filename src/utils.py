@@ -23,7 +23,7 @@ print(loadtrfrom_json(file_path))
 content = loadtrfrom_json(file_path)
 
 
-def sum_transaction(money: dict) -> Any:
+def sum_transaction(money: dict) -> float:
     """Функция принимает на вход транзакцию и возвращает сумму транзакции в рублях"""
     from src.external_api import currency_conversion
 
