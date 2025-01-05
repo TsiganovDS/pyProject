@@ -26,6 +26,9 @@
 ### sum_transaction: Функция принимает на вход транзакцию и возвращает сумму транзакции в рублях.
 ## Модуль external_api.py
 ### currency_conversion: Функция конвертации.
+## Модуль csvread.py:
+### read_csv: Функция для считывания финансовых операций из CSV.
+### read_xlsx: Функция для считывания финансовых операций из Excel.
 ## Инструкция по установке:
 ### 1.Скачать репозиторий: git clone https://github.com/TsiganovDS/pyProject
 ### 2. 2.Установить необходимые зависимости: pip install -r requirements
