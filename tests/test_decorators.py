@@ -1,7 +1,5 @@
 from typing import Any
 
-import pytest
-
 from src.decorators import log
 
 
@@ -24,7 +22,7 @@ def test_log_different_types_str(capsys: Any) -> None:
 
     try:
         my_function("a", "b")
-    except TypeError as e:
+    except TypeError:
         captured = capsys.readouterr()
         assert "my_function error: " in captured.out
 
@@ -39,7 +37,7 @@ def test_log_lack_argument(capsys: Any) -> None:
         my_function(
             1,
         )
-    except TypeError as e:
+    except TypeError:
         captured = capsys.readouterr()
         assert "my_function error: " in captured.out
 
@@ -52,7 +50,7 @@ def test_log_different_types_argument(capsys: Any) -> None:
 
     try:
         my_function(1, "")
-    except TypeError as e:
+    except TypeError:
         captured = capsys.readouterr()
         assert "my_function error: " in captured.out
 
@@ -65,6 +63,6 @@ def test_log_different_types_no_argument(capsys: Any) -> None:
 
     try:
         my_function()
-    except TypeError as e:
+    except TypeError:
         captured = capsys.readouterr()
         assert "my_function error: " in captured.out
