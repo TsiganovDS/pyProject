@@ -26,4 +26,4 @@ def test_read_excel(mock_read_excel):
 
     expected = [{"id": 1, "amount": 100}, {"id": 2, "amount": 200}]
     assert result == expected
-    mock_read_excel.assert_called_once_with(file_patch1)
+    mock_read_excel.assert_called_once_with(file_patch1
