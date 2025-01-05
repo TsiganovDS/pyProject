@@ -6,7 +6,7 @@ from src.csvread import file_patch, file_patch1, read_csv, read_excel
 
 
 @patch("pandas.read_csv")
-def test_read_csv(mock_read_csv):
+def test_read_csv(mock_read_csv) -> None:
     mock_data = pd.DataFrame({"id": [1, 2], "amount": [100, 200]})
     mock_read_csv.return_value = mock_data
 
@@ -18,7 +18,7 @@ def test_read_csv(mock_read_csv):
 
 
 @patch("pandas.read_excel")
-def test_read_excel(mock_read_excel):
+def test_read_excel(mock_read_excel) -> None:
     mock_data = pd.DataFrame({"id": [1, 2], "amount": [100, 200]})
     mock_read_excel.return_value = mock_data
 
