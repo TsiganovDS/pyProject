@@ -5,8 +5,8 @@ import pandas as pd
 file_patch = os.path.join(os.path.dirname(__file__), "..", "data", "transactions.csv")
 
 
-def read_csv(path: str) -> list[dict]:
-    df = pd.read_csv(path)
+def read_csv(file_patch: str) -> list[dict]:
+    df = pd.read_csv(file_patch)
     return df.to_dict(orient="records")
 
 
