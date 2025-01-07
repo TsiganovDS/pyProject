@@ -18,29 +18,21 @@ def setup_masks_logger() -> logging.Logger:
 masks_logger = setup_masks_logger()
 
 
-def get_mask_card_number(card_number: str) -> str:
+def get_mask_card_number(numer_cart: str) -> str:
     """Функция маскировки номера карты"""
     masks_logger.info("Запуск функции get_mask_card_number")
-    if len(str(card_number)) != 16:
-        masks_logger.error("Неправильный номер карты: %s", card_number)
+    if len(str(numer_cart)) != 16:
+        masks_logger.error("Неправильный номер карты: %s", numer_cart)
         raise ValueError("Неправильный номер карты")
 
-    masked_number = f"{card_number[:4]} {card_number[4:6]}** **** {card_number[12:]}"
-    return masked_number
+    return f"{numer_cart[:4]} {numer_cart[4:6]}** **** {numer_cart[12:]}"
+
 
 
 def get_mask_account(account_number: str) -> str:
     """Функция маскировки номера счета"""
-    masks_logger.info("Запуск функции get_mask_account.")
-    if len(str(account_number)) != 20:
+    masks_logger.info("Запуск функции getmask_account.")
+    if not account_number.isdigit() or len(str(account_number)) != 20:
         masks_logger.error("Неправильный номер счета: %s", account_number)
         raise ValueError("Неправильный номер счета")
-    masked_account = f"** {account_number[-4:]}"
-    return masked_account
-
-
-try:
-    masks_logger.info(f"Замаскированный номер карты: {get_mask_card_number("7000792289606361")}")
-    masks_logger.info(f"Замаскированный номер счета: {get_mask_account("22425621641834121234")}")
-except ValueError as e:
-    masks_logger.exception("Ошибка: %s", e)
+    return f"**{account_number[-4:]}"
