@@ -7,18 +7,20 @@ def mask_account_card(cart: str) -> str:
     """Функция обрабатывает информацию как о картах, так и о счетах."""
     name_cart = ""
     numer_cart = ""
-    list_cart = cart.split()
-    for i in list_cart:
-        if i.isdigit():
+    cart = str(cart).strip()
+
+    for i in cart:
+        if i.isalpha():
+            name_cart += i
+        elif i.isdigit():
             numer_cart += i
-        elif i.isalpha():
-            name_cart += i + " "
+
+    name_cart = name_cart.strip()
+
     if len(numer_cart) == 16:
-        return str(name_cart + get_mask_card_number(str(numer_cart)))
+        return str(name_cart + " " + get_mask_card_number(numer_cart))
     elif len(numer_cart) == 20:
-        return str(name_cart + get_mask_account(str(numer_cart)))
-    else:
-        raise ValueError("Введен неправильный номер")
+        return str(name_cart + " " + get_mask_account(numer_cart))
 
 
 def get_date(date_sting: str) -> str:
