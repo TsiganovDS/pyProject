@@ -2,11 +2,11 @@ from typing import Any
 
 import pytest
 
-from src.generators import card_number_generator, filter_by_currency, transaction_descriptions, transactions
+from src.generators import card_number_generator, filter_by_currency, transaction_descriptions, trans
 
 
 def test_filter_by_currency() -> None:
-    generator = filter_by_currency(transactions)
+    generator = filter_by_currency(trans)
     assert next(generator) == {
         "id": 939719570,
         "state": "EXECUTED",
@@ -25,19 +25,19 @@ def test_filter_by_currency_not_list() -> None:
 
 
 def test_filter_by_currency_not_currency() -> None:
-    generator = filter_by_currency(transactions, "EUR")
+    generator = filter_by_currency(trans, "EUR")
     with pytest.raises(StopIteration):
         next(generator)
 
 
 def test_transaction_descriptions() -> None:
-    a = transaction_descriptions(transactions)
+    a = transaction_descriptions(trans)
     assert next(a) == "Перевод организации"
 
 
 @pytest.mark.parametrize("index, expected", [(0, "Перевод организации"), (1, "Перевод со счета на счет")])
 def test_transaction_descriptions_3(index: Any, expected: Any) -> None:
-    descriptions = list(transaction_descriptions(transactions))
+    descriptions = list(transaction_descriptions(trans))
     assert descriptions[index] == expected
 
 

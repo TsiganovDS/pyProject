@@ -17,15 +17,10 @@ def mask_account_card(cart: str) -> str:
 
     name_cart = name_cart.strip()
 
-    # Проверяем длину номера после обработки всей строки
     if len(numer_cart) == 16:
         return str(name_cart + " " + get_mask_card_number(numer_cart))
     elif len(numer_cart) == 20:
         return str(name_cart + " " + get_mask_account(numer_cart))
-    else:
-        raise ValueError("Введен неправильный номер")
-
-
 
 
 def get_date(date_sting: str) -> str:

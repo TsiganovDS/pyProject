@@ -28,7 +28,6 @@ def get_mask_card_number(numer_cart: str) -> str:
     return f"{numer_cart[:4]} {numer_cart[4:6]}** **** {numer_cart[12:]}"
 
 
-
 def get_mask_account(account_number: str) -> str:
     """Функция маскировки номера счета"""
     masks_logger.info("Запуск функции getmask_account.")

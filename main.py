@@ -1,17 +1,11 @@
-import json
-import csv
-import os
-import re
-
+from src.csvread import file_csv, file_xlxs, read_csv, read_exc
 from src.processing import filter_by_state, sort_by_date
-from src.transaction_utils import count_operations_by_category, filter_transactions
-
-from src.csvread import read_csv, file_csv, read_exc, file_xlxs
-from src.utils import loadtrfrom_json, file_json
-from src.widget import mask_account_card, get_date
+from src.transaction_utils import filter_transactions
+from src.utils import file_json, loadtrfrom_json
+from src.widget import get_date, mask_account_card
 
 
-def main():
+def main() -> None:
     print("Привет! Добро пожаловать в программу работы с банковскими транзакциями.")
     print("Выберите необходимый пункт меню:")
     print("1. Получить информацию о транзакциях из JSON-файла")
@@ -19,18 +13,20 @@ def main():
     print("3. Получить информацию о транзакциях из XLSX-файла")
 
     choice = input("Пользователь: ")
-    if choice == '1':
+    if choice == "1":
         transactions = loadtrfrom_json(file_json)
         print("Для обработки выбран JSON-файл.")
-    elif choice == '2':
+    elif choice == "2":
         transactions = read_csv(file_csv)
         print("Для обработки выбран CSV-файл.")
-    elif choice == '3':
+    elif choice == "3":
         transactions = read_exc(file_xlxs)
         print("Для обработки выбран XLSX-файл.")
 
-    print("Введите статус, по которому необходимо выполнить фильтрацию."
-        " Доступные для фильтрования статусы: EXECUTED, CANCELED, PENDING\nПользователь: ")
+    print(
+        "Введите статус, по которому необходимо выполнить фильтрацию."
+        " Доступные для фильтрования статусы: EXECUTED, CANCELED, PENDING\nПользователь: "
+    )
 
     while True:
         search_string = input()
@@ -62,8 +58,7 @@ def main():
     while True:
         data_rub = input()
         if data_rub.lower() == "да" and int(choice) == 1:
-            filtered = list(
-                filter(lambda x: x.get("operationAmount").get("currency").get("code") == "RUB", filtered))
+            filtered = list(filter(lambda x: x.get("operationAmount").get("currency").get("code") == "RUB", filtered))
             break
         elif data_rub.lower() == "да" and int(choice) == 2:
             filtered = list(filter(lambda x: x.get("currency_code") == "RUB", filtered))
@@ -96,26 +91,17 @@ def main():
         print(f"Всего банковских операций в выборке: {len(filtered)}\n")
         for transaction in filtered:
             date = get_date(transaction.get("date"))
-            print(f"{date} {transaction.get("description")}")
             account_from = ""
             if transaction.get("from"):
-                account_from = (mask_account_card(transaction.get("from")))
+                account_from = mask_account_card(transaction.get("from", ""))
             account_to = mask_account_card(transaction.get("to"))
-            print(account_from, " -> ", account_to)
-            if int(choice) == 2 or int(choice) == 3:
-                amount = transaction["operationAmount"]["amount"]
-                currency = transaction["operationAmount"]["currency"]["code"]
+            description = transaction["description"]
+            amount = transaction["operationAmount"]["amount"]
+            currency = transaction["operationAmount"]["currency"]["code"]
+            if description == "Открытие вклада":
+                print(f"{date} {description}\n{account_to}\nСумма: {amount} {currency}\n")
             else:
-                amount = transaction.get("operationAmount").get("amount")
-                currency = transaction.get("operationAmount").get("currency").get("name")
-            print(f"Сумма: {amount} {currency}\n")
+                print(f"{date} {description}\n{account_from} -> {account_to}\nСумма: {amount} {currency}\n")
 
 
 main()
-
-
-
-
-
-
-

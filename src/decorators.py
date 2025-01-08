@@ -9,7 +9,6 @@ def log(filename: Any) -> Callable:
         @wraps(func)
         def wrapper(*args: Any, **kwargs: Any) -> Any:
             try:
-                result = func(*args, **kwargs)
                 log_message = f"{func.__name__} ok"
             except Exception as e:
                 log_message = f"{func.__name__} error: {e}. Inputs:{args}, {kwargs}"
