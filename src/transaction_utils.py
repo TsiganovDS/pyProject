@@ -28,7 +28,3 @@ def count_operations_by_category(transactions: list[dict], categories: str) -> d
             description_count[description] += 1
     result = dict(description_count)
     return result
-
-
-item = count_operations_by_category(transactions, "description")
-print(item)

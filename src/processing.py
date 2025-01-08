@@ -1,5 +1,5 @@
-import re
 from typing import Any, Iterable
+import re
 
 
 def filter_by_state(transactions: list[dict[str, Any]], search_string: str) -> list[dict[str, Any]]:

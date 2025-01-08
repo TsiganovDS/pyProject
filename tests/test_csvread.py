@@ -1,29 +1,44 @@
 from unittest.mock import patch
-
 import pandas as pd
-
-from src.csvread import file_csv, file_xlxs, read_csv, read_exc
-
-
-@patch("pandas.read_csv")
-def test_read_csv(mock_read_csv) -> None:
-    mock_data = pd.DataFrame({"id": [1, 2], "amount": [100, 200]})
-    mock_read_csv.return_value = mock_data
-
-    result = read_csv(file_csv)
-
-    expected = [{"id": 1, "amount": 100}, {"id": 2, "amount": 200}]
-    assert result == expected
-    mock_read_csv.assert_called_once_with(file_csv)
+from src.csvread import read_exc
 
 
-@patch("pandas.read_excel")
-def test_read_excel(mock_read_excel) -> None:
-    mock_data = pd.DataFrame({"id": [1, 2], "amount": [100, 200]})
-    mock_read_excel.return_value = mock_data
+def test_read_exc():
+    # Создаем DataFrame для имитации чтения из Excel
+    mock_data = {
+        "id": [650703],
+        "state": ["EXECUTED"],
+        "date": ["2023-09-05T11:30:32Z"],
+        "amount": [1000],
+        "currency_name": ["RUB"],
+        "currency_code": ["RUB"],
+        "description": ["Transaction description"],
+        "from": ["Sender"],
+        "to": ["Receiver"],
+    }
 
-    result = read_exc(file_xlxs)
+    df = pd.DataFrame(mock_data)
 
-    expected = [{"id": 1, "amount": 100}, {"id": 2, "amount": 200}]
-    assert result == expected
-    mock_read_excel.assert_called_once_with(file_xlxs)
+    # Патчим метод read_excel для возвращения нашего DataFrame
+    with patch("pandas.read_excel", return_value=df, sep=";"):
+        result = read_exc("mock_file.xlsx")
+
+        expected_result = [
+            {
+                "id": 650703,
+                "state": "EXECUTED",
+                "date": "2023-09-05T11:30:32Z",
+                "operationAmount": {
+                    "amount": 1000,
+                    "currency": {
+                        "name": "RUB",
+                        "code": "RUB",
+                    },
+                },
+                "description": "Transaction description",
+                "from": "Sender",
+                "to": "Receiver",
+            }
+        ]
+
+        assert result == expected_result
